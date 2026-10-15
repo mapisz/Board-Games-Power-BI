@@ -1,0 +1,10 @@
+relationship 37a97dfc-ac3a-53f3-3a28-cd7c9ed0d755
+	crossFilteringBehavior: bothDirections
+	fromColumn: Domains.ID
+	toColumn: 'Board Games'.ID
+
+relationship 3f77cf57-e40e-d8ac-a214-dda847cc216e
+	crossFilteringBehavior: bothDirections
+	fromColumn: Mechanics.ID
+	toColumn: 'Board Games'.ID
+

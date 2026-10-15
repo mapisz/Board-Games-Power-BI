@@ -1,0 +1,171 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "c7f53bb08918bd6907e6",
+  "position": {
+    "x": 1301.6666666666667,
+    "y": 133.33333333333334,
+    "z": 1,
+    "height": 535,
+    "width": 571,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Board Games"
+                    }
+                  },
+                  "Property": "ID"
+                }
+              },
+              "queryRef": "Board Games.ID",
+              "nativeQueryRef": "ID",
+              "active": true
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Board Games"
+                        }
+                      },
+                      "Property": "Users Rated"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Board Games.Users Rated)",
+              "nativeQueryRef": "Sum of Users Rated",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Board Games"
+                        }
+                      },
+                      "Property": "Rating Average"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Sum(Board Games.Rating Average)",
+              "nativeQueryRef": "Rating Average",
+              "displayName": "Rating Average"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Relationship Between Number of Ratings and Average Rating'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "b14120def0b6ceaabe6c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Board Games"
+              }
+            },
+            "Property": "ID"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "acd19e46f1093791037e",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Board Games"
+                  }
+                },
+                "Property": "Users Rated"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3d628b90ec5765843381",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Board Games"
+                  }
+                },
+                "Property": "Rating Average"
+              }
+            },
+            "Function": 1
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

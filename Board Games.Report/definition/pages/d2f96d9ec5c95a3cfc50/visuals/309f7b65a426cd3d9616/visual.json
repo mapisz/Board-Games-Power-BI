@@ -1,0 +1,90 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "309f7b65a426cd3d9616",
+  "position": {
+    "x": 250,
+    "y": 228,
+    "z": 7,
+    "height": 128,
+    "width": 226,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Mechanics"
+                        }
+                      },
+                      "Property": "Mechanics"
+                    }
+                  },
+                  "Function": 2
+                }
+              },
+              "queryRef": "Min(Mechanics.Mechanics)",
+              "nativeQueryRef": "Number of Mechanics",
+              "displayName": "Number of Mechanics"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "Mechanics"
+                      }
+                    },
+                    "Property": "Mechanics"
+                  }
+                },
+                "Function": 2
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "feca63dfce0be9b8d588",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Mechanics"
+                  }
+                },
+                "Property": "Mechanics"
+              }
+            },
+            "Function": 2
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

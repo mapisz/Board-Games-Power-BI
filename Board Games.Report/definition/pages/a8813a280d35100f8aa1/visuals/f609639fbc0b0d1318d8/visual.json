@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "f609639fbc0b0d1318d8",
+  "position": {
+    "x": 1254.800048828125,
+    "y": 310.79998779296875,
+    "z": 2,
+    "height": 98,
+    "width": 618,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Board Games"
+                    }
+                  },
+                  "Property": "Max Players"
+                }
+              },
+              "queryRef": "Board Games.Max Players",
+              "nativeQueryRef": "Max Players",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Between'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7e5cfea7c7997bd7b702",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Board Games"
+              }
+            },
+            "Property": "Max Players"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

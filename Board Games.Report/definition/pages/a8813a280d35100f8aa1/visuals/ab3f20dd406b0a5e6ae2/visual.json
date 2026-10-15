@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "ab3f20dd406b0a5e6ae2",
+  "position": {
+    "x": 1564.800048828125,
+    "y": 432.79998779296875,
+    "z": 4,
+    "height": 60,
+    "width": 308,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Mechanics"
+                    }
+                  },
+                  "Property": "Mechanics"
+                }
+              },
+              "queryRef": "Mechanics.Mechanics",
+              "nativeQueryRef": "Mechanics",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "63bf6c5bb73435af3c5d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Mechanics"
+              }
+            },
+            "Property": "Mechanics"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "898fb27023f89379f0b5",
+  "position": {
+    "x": 728,
+    "y": 650,
+    "z": 4,
+    "height": 64,
+    "width": 210,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Domains"
+                    }
+                  },
+                  "Property": "Domains"
+                }
+              },
+              "queryRef": "Domains.Domains",
+              "nativeQueryRef": "Domains",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9425320ae4925cdfac76",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Domains"
+              }
+            },
+            "Property": "Domains"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

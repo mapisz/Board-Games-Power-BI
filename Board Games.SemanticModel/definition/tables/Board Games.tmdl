@@ -1,0 +1,175 @@
+table 'Board Games'
+	lineageTag: 1d9034a2-94f5-4276-98a8-e686d559033e
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: f046058a-8cd1-4119-b1e4-c730415bc56c
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 7c4b84d0-8c2e-469a-8804-372145f06264
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Published'
+		dataType: int64
+		formatString: 0
+		lineageTag: 495cc59e-8e0f-4d62-984f-36984d72b200
+		summarizeBy: sum
+		sourceColumn: Year Published
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Min Players'
+		dataType: int64
+		formatString: 0
+		lineageTag: 27906b57-464f-4daa-b5c4-f5e3c355415c
+		summarizeBy: sum
+		sourceColumn: Min Players
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Players'
+		dataType: int64
+		formatString: 0
+		lineageTag: c60506dc-b0ee-471a-a91b-8d0797cbc03a
+		summarizeBy: sum
+		sourceColumn: Max Players
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Play Time'
+		dataType: int64
+		formatString: 0
+		lineageTag: 72953f6e-398f-4a2e-8322-c8c788a0a8ec
+		summarizeBy: sum
+		sourceColumn: Play Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Min Age'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b2b37ca-779c-4319-a04c-2a9d53235622
+		summarizeBy: sum
+		sourceColumn: Min Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Users Rated'
+		dataType: int64
+		formatString: 0
+		lineageTag: b3fda4ef-732a-4a8e-b70e-11eed23152c5
+		summarizeBy: sum
+		sourceColumn: Users Rated
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Average'
+		dataType: double
+		lineageTag: 4b973c92-babe-46ea-ad03-a95be38a0601
+		summarizeBy: sum
+		sourceColumn: Rating Average
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Board Games","TableItemName":"Rating Average (bins)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column 'BGG Rank'
+		dataType: int64
+		formatString: 0
+		lineageTag: d6fcb24a-589c-443c-99ac-ebc583b7d628
+		summarizeBy: none
+		sourceColumn: BGG Rank
+
+		annotation SummarizationSetBy = User
+
+	column 'Complexity Average'
+		dataType: double
+		lineageTag: b6de71c2-8037-4ae5-9fb2-821ef0516def
+		summarizeBy: sum
+		sourceColumn: Complexity Average
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Owned Users'
+		dataType: int64
+		formatString: 0
+		lineageTag: fda2d31e-b883-4600-ad62-7bfb29bb7cf2
+		summarizeBy: sum
+		sourceColumn: Owned Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Average (bins)' =
+			IF(
+				ISBLANK('Board Games'[Rating Average]),
+				BLANK(),
+				IF(
+					'Board Games'[Rating Average] >= 0,
+					ROUNDDOWN('Board Games'[Rating Average], 0),
+					ROUNDUP('Board Games'[Rating Average], 0)
+				)
+			)
+		lineageTag: 24a4feae-c9a1-4fb6-9d8c-b28de867cd51
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Board Games"
+				          }
+				        },
+				        "Property": "Rating Average"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 1.0,
+				      "unit": 0
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"b","Entity":"Board Games"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"b"}},"Property":"Rating Average"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"b"}},"Property":"Rating Average"}},"Size":1.0}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Board Games' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\magda\My stuff\Projekty\Portfolio\PowerBi\BGG_Data_Set.csv"),[Delimiter=",", Columns=14, Encoding=1250, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Name", type text}, {"Year Published", Int64.Type}, {"Min Players", Int64.Type}, {"Max Players", Int64.Type}, {"Play Time", Int64.Type}, {"Min Age", Int64.Type}, {"Users Rated", Int64.Type}, {"Rating Average", type text}, {"BGG Rank", Int64.Type}, {"Complexity Average", type text}, {"Owned Users", Int64.Type}, {"Mechanics", type text}, {"Domains", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type",".",",",Replacer.ReplaceText,{"Rating Average", "Complexity Average"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Value",{{"Rating Average", type number}, {"Complexity Average", type number}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Mechanics", "Domains"}),
+				    #"Sorted Rows" = Table.Sort(#"Removed Columns",{{"ID", Order.Ascending}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Sorted Rows", each [ID] <> null and [ID] <> "")
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

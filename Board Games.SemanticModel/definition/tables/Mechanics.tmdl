@@ -1,0 +1,43 @@
+table Mechanics
+	lineageTag: 6ba2fe91-c1ee-46c9-8dc0-5b38e88a5fb9
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: b9f2330c-5bd1-4055-88b3-6bb96e80c419
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mechanics
+		dataType: string
+		lineageTag: 132591f7-7429-4451-9a45-9a31cc479bda
+		summarizeBy: none
+		sourceColumn: Mechanics
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Mechanics = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\magda\My stuff\Projekty\Portfolio\PowerBi\BGG_Data_Set.csv"),[Delimiter=",", Columns=14, Encoding=1250, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Name", type text}, {"Year Published", Int64.Type}, {"Min Players", Int64.Type}, {"Max Players", Int64.Type}, {"Play Time", Int64.Type}, {"Min Age", Int64.Type}, {"Users Rated", Int64.Type}, {"Rating Average", type text}, {"BGG Rank", Int64.Type}, {"Complexity Average", type text}, {"Owned Users", Int64.Type}, {"Mechanics", type text}, {"Domains", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type",".",",",Replacer.ReplaceText,{"Rating Average", "Complexity Average"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Value",{{"Rating Average", type number}, {"Complexity Average", type number}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type1",{"ID", "Mechanics"}),
+				    #"Split Column by Delimiter" = Table.ExpandListColumn(Table.TransformColumns(#"Removed Other Columns", {{"Mechanics", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Mechanics"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Mechanics", type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type2",{{"Mechanics", Text.Trim, type text}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Trimmed Text","","Unclassified",Replacer.ReplaceValue,{"Mechanics"}),
+				    #"Sorted Rows" = Table.Sort(#"Replaced Value1",{{"ID", Order.Ascending}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Sorted Rows", each [ID] <> null and [ID] <> "")
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
