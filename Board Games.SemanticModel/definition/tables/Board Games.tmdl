@@ -72,6 +72,8 @@ table 'Board Games'
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Board Games","TableItemName":"Users Rated (bins)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
 	column 'Rating Average'
 		dataType: double
 		lineageTag: 4b973c92-babe-46ea-ad03-a95be38a0601
@@ -149,6 +151,51 @@ table 'Board Games'
 				}
 
 		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"b","Entity":"Board Games"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"b"}},"Property":"Rating Average"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"b"}},"Property":"Rating Average"}},"Size":1.0}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Users Rated (bins)' =
+			VAR __Count = 5
+			
+			VAR __Min = MIN('Board Games'[Users Rated])
+			
+			VAR __Max = MAX('Board Games'[Users Rated])
+			
+			VAR __Difference = (__Max - __Min)
+			
+			VAR __Size = IF(__Difference > 0, __Difference / __Count, 1)
+			
+			VAR __BinNumber = INT(('Board Games'[Users Rated] - __Min) / __Size)
+			
+			RETURN
+				IF(
+					ISBLANK('Board Games'[Users Rated]),
+					BLANK(),
+					__Min + (MIN(__BinNumber, __Count - 1) * __Size)
+				)
+		lineageTag: a160a525-425f-43e8-b451-57218ad2a6f9
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Board Games"
+				          }
+				        },
+				        "Property": "Users Rated"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"b","Entity":"Board Games"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"b"}},"Property":"Users Rated"}}],"BinItem":{"Expression":{"Member":{"Expression":{"Discretize":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"b"}},"Property":"Users Rated"}},"Count":5}},"Member":"Min"}}}}
 
 		annotation SummarizationSetBy = Automatic
 
